@@ -4,6 +4,8 @@ Aplicação web para upload, processamento e transformação de documentos PDF e
 
 Projeto desenvolvido com foco em estudo de desenvolvimento Full Stack e preparação para desafios técnicos envolvendo processamento de documentos.
 
+---
+
 ## 🎯 Objetivo
 
 Praticar:
@@ -17,6 +19,8 @@ Praticar:
 - Banco de dados
 - Exportação XLSX
 - Docker
+
+---
 
 ## 🛠️ Stack
 
@@ -39,6 +43,8 @@ Praticar:
 
 - Docker
 - Docker Compose
+
+---
 
 ## 🏗️ Arquitetura
 
