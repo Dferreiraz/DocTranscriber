@@ -33,7 +33,7 @@ Praticar:
 
 ### Database
 
-- [Definir]
+- [...]
 
 ### Infraestrutura
 
@@ -59,9 +59,14 @@ Architecture
 API
 Database
 Technical Decisions
+```
+---
+
 📌 Status
 
 🚧 Em desenvolvimento
+
+---
 
 👨‍💻 Autor
 
