@@ -1,14 +1,17 @@
-require("dotenv").config() // Carrega as variáveis de ambiente presentes no arquivo .env.
+const express = require ('express')
+const loggerMiddleware = require('./middlewares/loggerMiddleware')
+const healthRoutes = require('./routes/healthRoutes')
+const documentRoutes = require('./routes/documentRoutes')
 
-const app = require("./app") // Importa a aplicação Express configurada no app.js.
+const app = express()
+const PORT = 3000
 
-const PORT = process.env.PORT || 3000
-// Tenta pegar a porta definida na variável de ambiente PORT.
-// Caso ela não exista, utiliza a porta 3000.
+app.use(loggerMiddleware)
+app.use(express.json())
+
+app.use('/api/health', healthRoutes) 
+app.use('/api/documents', documentRoutes)
 
 app.listen(PORT, () => {
-    console.log(`DocTranscriber API running on port ${PORT}`)
+    console.log(`🚀 Servidor rodando na porta ${PORT}`)
 })
-// Inicia o servidor HTTP.
-// O servidor passa a escutar requisições na porta definida.
-// Quando o servidor estiver funcionando, executa o console.log.

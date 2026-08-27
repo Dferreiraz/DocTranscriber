@@ -2,11 +2,12 @@
 
 ## Fase 1 — Planejamento
 
-- [ ] Definir requisitos
-- [ ] Definir arquitetura
-- [ ] Definir tecnologias
-- [ ] Criar estrutura do projeto
-- [ ] Configurar Git
+- [x] Definir requisitos
+- [x] Definir arquitetura
+- [x] Definir tecnologias
+- [x] Criar estrutura do projeto
+- [x] Configurar Git
+- [ ] Criar documentação inicial
 
 ---
 
@@ -38,101 +39,6 @@
 - [ ] GET /documents/:id
 - [ ] PUT /documents/:id
 - [ ] DELETE /documents/:id
-
----
-
-## Fase 4 — Upload
-
-- [ ] Criar endpoint de upload
-- [ ] Aceitar arquivos PDF
-- [ ] Validar extensão
-- [ ] Validar MIME type
-- [ ] Validar tamanho
-- [ ] Armazenar arquivo
-- [ ] Retornar ID do documento
-
----
-
-## Fase 5 — Processamento
-
-- [ ] Ler PDF
-- [ ] Extrair texto
-- [ ] Normalizar texto
-- [ ] Identificar informações
-- [ ] Transformar texto em dados estruturados
-- [ ] Criar status de processamento
-
-Status:
-
-- pending
-- processing
-- completed
-- failed
-
----
-
-## Fase 6 — Banco de Dados
-
-- [ ] Escolher banco
-- [ ] Criar modelagem
-- [ ] Criar tabela de documentos
-- [ ] Criar tabela de dados extraídos
-- [ ] Implementar CRUD
-- [ ] Testar persistência
-
----
-
-## Fase 7 — Frontend
-
-- [ ] Criar projeto React
-- [ ] Criar layout
-- [ ] Criar upload
-- [ ] Mostrar progresso
-- [ ] Mostrar documentos
-- [ ] Mostrar dados extraídos
-- [ ] Criar tabela editável
-- [ ] Implementar mensagens de erro
-
----
-
-## Fase 8 — Exportação
-
-- [ ] Criar geração de XLSX
-- [ ] Criar endpoint de download
-- [ ] Implementar botão no frontend
-- [ ] Testar arquivo gerado
-
----
-
-## Fase 9 — Docker
-
-- [ ] Criar Dockerfile backend
-- [ ] Criar Dockerfile frontend
-- [ ] Criar docker-compose.yml
-- [ ] Configurar variáveis
-- [ ] Testar docker compose up
-
----
-
-## Fase 10 — Deploy
-
-- [ ] Configurar backend
-- [ ] Configurar frontend
-- [ ] Configurar banco
-- [ ] Configurar variáveis de ambiente
-- [ ] Testar aplicação em produção
-
----
-
-## Fase 11 — Melhorias
-
-- [ ] Loading states
-- [ ] Tratamento de erros
-- [ ] Validação
-- [ ] Logs
-- [ ] Segurança
-- [ ] Melhorar UX
-- [ ] Melhorar documentação
 
 ---
 
