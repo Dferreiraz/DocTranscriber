@@ -95,7 +95,7 @@ As seguintes tecnologias foram utilizadas na construção do projeto:
 
 * **React**
 * **Vite**
-* **CSS**
+* **Tailwind CSS**
 
 ### Back-End
 
@@ -105,7 +105,7 @@ As seguintes tecnologias foram utilizadas na construção do projeto:
 
 ### Banco de Dados
 
-* **Database**
+* **SQLite**
 
 ### Processamento
 
