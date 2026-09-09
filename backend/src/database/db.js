@@ -1,5 +1,8 @@
 const Database = require('better-sqlite3')
-const db = new Database('src/database/documents.db')
+const path = require('path')
+
+const dbPath = path.join(__dirname, 'documents.db')
+const db = new Database(dbPath)
 
 db.exec(`
     CREATE TABLE IF NOT EXISTS documents (
@@ -9,9 +12,9 @@ db.exec(`
         status TEXT NOT NULL DEFAULT 'pending',
         extracted_data TEXT,
         created_at TEXT NOT NULL
-    )    
+    )
 `)
 
-    console.log('Banco de dados conectado e tabela pronta!')
+console.log('Banco de dados conectado e tabela pronta!')
 
 module.exports = db
