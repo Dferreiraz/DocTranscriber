@@ -50,13 +50,30 @@ function App() {
 
         <UploadArea onUploadSuccess={handleUploadSuccess} />
 
-        {loading ? (
+                {loading ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             <p className="mt-2 text-gray-600">Carregando documentos...</p>
           </div>
         ) : (
-          <DocumentList documents={documents} onDelete={handleDelete} />
+          <>
+            {/* 🆕 Botão de Exportar (só aparece se tiver documentos) */}
+            {documents.length > 0 && (
+              <div className="mb-4 flex justify-end">
+                <a 
+                  href="/api/documents/export"
+                  className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Exportar para Excel
+                </a>
+              </div>
+            )}
+
+            <DocumentList documents={documents} onDelete={handleDelete} />
+          </>
         )}
       </main>
     </div>
