@@ -1,100 +1,60 @@
-# 🎨 DocTranscriber — Branding
+# 🎨 DocTranscriber — Branding & Identidade Visual
 
 ## 🏷️ Nome
-
 DocTranscriber
 
 ## 💡 Conceito
+DocTranscriber é uma aplicação web Full Stack para envio, processamento e transformação de documentos PDF em dados estruturados. 
 
-DocTranscriber é uma aplicação web para envio, processamento e transformação de documentos PDF em dados estruturados.
+O projeto nasceu como um estudo prático de arquitetura de software, mas evoluiu para um MVP (Produto Mínimo Viável) funcional e deployado, demonstrando a capacidade de entregar uma solução completa de ponta a ponta.
 
-O projeto foi criado como um projeto de estudo para desenvolvimento Full Stack, com foco em:
-
-- Node.js
-- Express
-- React
-- APIs REST
-- Upload de arquivos
-- Processamento de documentos
-- Banco de dados
-- Exportação de dados
-
-## 🎯 Objetivo da marca
-
+##  Objetivo da Marca
 Transmitir uma imagem de:
+- **Tecnologia:** Uso de stack moderna e performática.
+- **Organização:** Hierarquia clara de informações e dados.
+- **Automação:** Processos de extração e exportação sem atrito.
+- **Simplicidade:** Interface livre de ruídos visuais.
+- **Confiabilidade:** Feedback constante sobre o status dos documentos.
 
-- Tecnologia
-- Organização
-- Automação
-- Simplicidade
-- Confiabilidade
+## 🎨 Direção Visual
+A interface adota um estilo **Clean & Minimalist**. O foco total está no conteúdo (os documentos e seus dados), eliminando distrações visuais.
 
-## 🎨 Direção visual
+A aplicação prioriza:
+- **Espaço em branco (Whitespace):** Para dar respiro e facilitar a leitura das tabelas.
+- **Feedback visual imediato:** Badges coloridos para status e animações de loading.
+- **Acessibilidade:** Alto contraste entre texto e fundo.
+- **Responsividade:** Adaptação fluida de desktops a dispositivos móveis.
 
-Interface moderna, limpa e profissional.
+## ️ Tema
+**Light Mode (Claro)** como tema principal.
+Escolhido por transmitir maior sensação de profissionalismo corporativo, clareza na leitura de dados tabulares e familiaridade com ferramentas de escritório (como Excel e Google Docs).
 
-A aplicação deve priorizar:
+## 🎨 Paleta de Cores (Tailwind CSS)
 
-- Clareza
-- Facilidade de uso
-- Boa hierarquia visual
-- Feedback durante processamento
-- Responsividade
+### Fundos e Superfícies
+- **Background Geral:** `bg-gray-50` (Cinza muito claro, evita o branco puro que cansa a vista).
+- **Superfícies (Cards/Tabelas):** `bg-white` (Branco puro para destacar o conteúdo).
+- **Bordas:** `border-gray-200` (Cinza sutil para delimitar áreas sem pesar).
 
-## 🌑 Tema
+### Cores Principais e Texto
+- **Primária (Ações/Brand):** `blue-600` (#2563EB) - Usada no logo, botões principais e ícones de ação.
+- **Texto Principal:** `text-gray-900` (#111827) - Quase preto, para máximo contraste e legibilidade.
+- **Texto Secundário:** `text-gray-500` (#6B7280) - Para metadados, datas e subtítulos.
 
-Dark mode como tema principal.
-
-## 🎨 Paleta
-
-### Background
-
-#0F172A
-
-### Surface
-
-#1E293B
-
-### Primary
-
-#3B82F6
-
-### Secondary
-
-#64748B
-
-### Success
-
-#22C55E
-
-### Warning
-
-#F59E0B
-
-### Error
-
-#EF4444
-
-### Text
-
-#F8FAFC
-
-### Muted
-
-#94A3B8
+### Cores de Status (Semânticas)
+- **Sucesso (Completed):** `bg-green-100` / `text-green-800`
+- **Atenção/Processando (Processing/Pending):** `bg-yellow-100` / `text-yellow-800` (ou `gray` para pending)
+- **Erro (Failed):** `bg-red-100` / `text-red-800`
 
 ## 🔤 Tipografia
+**Sans-serif moderna** (Padrão do sistema / Inter).
+Foco em legibilidade em tamanhos pequenos (tabelas) e clareza em títulos.
 
-Inter ou outra fonte sans-serif moderna.
+## 🗣️ Tom de Voz
+> *"Simples para o usuário, poderoso por baixo."*
 
-## 🗣️ Tom
+A interface fala de forma direta e técnica, mas amigável. Mensagens de erro são claras e as ações são intuitivas.
 
-O produto deve transmitir:
-
-> Simples para o usuário, poderoso por baixo.
-
-## 🎯 Público
-
-Projeto educacional voltado para estudo de desenvolvimento Full Stack.
-
-Posteriormente, a aplicação poderá ser adaptada para processamento real de documentos empresariais.
+## 🎯 Público-Alvo
+- **Atual:** Recrutadores técnicos, Tech Leads e desenvolvedores (como peça de portfólio).
+- **Futuro:** Profissionais de RH, departamentos financeiros e jurídicos que necessitam de digitalização e extração de dados de documentos físicos.
