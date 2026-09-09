@@ -38,13 +38,15 @@ https://doctranscriber.onrender.com/
 ## ⚙️ Funcionalidades
 
 * [x] Upload de documentos PDF com validação de tipo e tamanho
+* [x] Processamento e extração automática de texto do PDF
+* [x] Visualização do conteúdo transcrito em modal
+* [x] Download do PDF original
+* [x] Exportação de dados estruturados para XLSX (Excel)
 * [x] Listagem, busca e exclusão de documentos
 * [x] Atualização parcial de status e dados extraídos
 * [x] Comunicação entre Front-End e Back-End através de API REST
-* [x] Persistência de dados real com banco de dados relacional
+* [x] Persistência de dados real com banco de dados relacional (SQLite)
 * [x] Interface responsiva e moderna com Tailwind CSS
-* [ ] Processamento e extração de texto do PDF (Em breve)
-* [ ] Exportação de dados estruturados para XLSX (Em breve)
 * [ ] Containerização e orquestração com Docker (Em breve)
 
 ---
