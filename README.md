@@ -1,12 +1,13 @@
-# 🚧 DocTranscriber - Em contrução 🚧
+# 🚧 DocTranscriber - Em construção 🚧
 
 <p align="center">
+ •
  <a href="#-descrição-do-entregável">Descrição do Entregável</a> •
  <a href="#-sobre-o-projeto">Sobre</a> •
  <a href="#-funcionalidades">Funcionalidades</a> •
- <!-- <a href="#-layout">Layout</a> • -->
- <!-- <a href="#-como-executar-o-projeto">Como executar</a> • -->
  <a href="#-tecnologias">Tecnologias</a> •
+ <a href="#-arquitetura">Arquitetura</a> •
+ <a href="#-documentação">Documentação</a> •
  <a href="#-autor">Autor</a> •
 </p>
 
@@ -14,78 +15,95 @@
 
 ## 📄 Descrição do entregável
 
-O **DocTranscriber** é uma aplicação web desenvolvida para realizar o upload, processamento e transformação de documentos PDF em dados estruturados.
+O **DocTranscriber** é uma aplicação web desenvolvida para realizar o upload, gerenciamento e processamento de documentos PDF, com o objetivo de transformar seu conteúdo em dados estruturados.
 
-A aplicação foi desenvolvida como um projeto Full Stack, integrando uma interface em React com uma API REST desenvolvida em Node.js e Express.
+A aplicação está sendo desenvolvida como um projeto Full Stack, integrando uma interface construída com React a uma API REST desenvolvida em Node.js e Express.
 
 ---
 
 ## 💻 Sobre o projeto
 
-O DocTranscriber foi desenvolvido com o objetivo de praticar conceitos de desenvolvimento Full Stack e trabalhar com um fluxo completo de processamento de documentos.
+O DocTranscriber foi desenvolvido com o objetivo de praticar conceitos de desenvolvimento Full Stack e trabalhar com um fluxo completo de gerenciamento e processamento de documentos.
 
-O projeto envolve desde o upload dos arquivos pelo usuário até o processamento das informações, organização dos dados e posterior exportação.
+O projeto envolve desde o upload e gerenciamento dos arquivos pelo usuário até a persistência dos dados e, futuramente, a extração e transformação do conteúdo dos documentos em informações estruturadas.
 
-Além do desenvolvimento da aplicação, o projeto também foi utilizado para aprofundar conhecimentos relacionados à construção de APIs REST, manipulação de arquivos, banco de dados, containers e arquitetura de aplicações.
+Além do desenvolvimento da aplicação, o projeto também é utilizado para aprofundar conhecimentos relacionados à construção de APIs REST, manipulação de arquivos, banco de dados relacionais, arquitetura de aplicações e infraestrutura.
+
+### 🌎 Deploy
+
+https://doctranscriber.onrender.com/
 
 ---
 
 ## ⚙️ Funcionalidades
 
-* [x] Upload de documentos PDF
-* [x] Processamento de documentos
-* [x] Transformação de informações em dados estruturados
+* [x] Upload de documentos PDF com validação de tipo e tamanho
+* [x] Listagem, busca e exclusão de documentos
+* [x] Atualização parcial de status e dados extraídos
 * [x] Comunicação entre Front-End e Back-End através de API REST
-* [x] Persistência de dados
-* [x] Exportação de dados para XLSX
-* [x] Execução da aplicação utilizando Docker
-* [x] Orquestração dos serviços utilizando Docker Compose
+* [x] Persistência de dados real com banco de dados relacional
+* [x] Interface responsiva e moderna com Tailwind CSS
+* [ ] Processamento e extração de texto do PDF (Em breve)
+* [ ] Exportação de dados estruturados para XLSX (Em breve)
+* [ ] Containerização e orquestração com Docker (Em breve)
 
-<!--
 ---
 
- ## 🎨 Layout
+## 🎨 Layout
 
 ### Aplicação
 
-Adicionar imagens/screenshots do projeto -->
+> Em breve serão adicionadas imagens e screenshots da aplicação.
 
 ---
 
-<!-- ## 🚀 Como executar o projeto
+## 🚀 Como executar o projeto
 
 ### Pré-requisitos
 
 Antes de começar, você vai precisar ter instalado em sua máquina:
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/)
-* [Docker](https://www.docker.com/)
-* Docker Compose
+* [Node.js](https://nodejs.org/) (v18+ recomendado)
 
-### Executando com Docker
+### Executando localmente
 
-Clone o repositório:
+1. Clone o repositório:
 
 ```bash
 git clone https://github.com/Dferreiraz/DocTranscriber.git
-```
-
-Acesse a pasta do projeto:
-
-```bash
 cd DocTranscriber
 ```
 
-Execute os serviços:
+2. **Configurando o Back-End:**
 
 ```bash
-docker compose up
+cd backend
+npm install
+node src/server.js
 ```
 
-Após a inicialização dos containers, a aplicação estará disponível conforme as portas configuradas no projeto.
+O servidor será iniciado em:
 
---- -->
+```text
+http://localhost:3000
+```
+
+3. **Configurando o Front-End em outro terminal:**
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+A interface estará disponível em:
+
+```text
+http://localhost:5173
+```
+
+---
 
 ## 🛠 Tecnologias
 
@@ -93,45 +111,75 @@ As seguintes tecnologias foram utilizadas na construção do projeto:
 
 ### Front-End
 
-* **React**
-* **Vite**
-* **Tailwind CSS**
+* **React** — Biblioteca para construção da interface
+* **Vite** — Build tool e servidor de desenvolvimento
+* **Tailwind CSS** — Estilização da interface
+* **Axios** — Cliente HTTP para comunicação com a API
 
 ### Back-End
 
-* **Node.js**
-* **Express**
-* **API REST**
+* **Node.js** — Ambiente de execução
+* **Express** — Framework para construção da API
+* **Multer** — Middleware para upload e gerenciamento de arquivos
 
 ### Banco de Dados
 
-* **SQLite**
+* **SQLite** — Banco de dados relacional
+* **better-sqlite3** — Biblioteca para integração com SQLite
 
-### Processamento
+### Infraestrutura e Deploy
 
-* **PDF Processing**
-* **XLSX**
-
-### Infraestrutura
-
-* **Docker**
-* **Docker Compose**
+* **Render** — Hospedagem da aplicação em produção
+* **Git** — Sistema de controle de versão
+* **GitHub** — Hospedagem do repositório e versionamento do projeto
 
 ---
 
 ## 🏗️ Arquitetura
 
+O projeto segue uma arquitetura desacoplada, onde o Back-End atua como uma API REST e também pode servir os arquivos estáticos do Front-End em produção.
+
 ```text
-React
-  ↓
-REST API
-  ↓
-Node.js + Express
-  ↓
-Database
-  ↓
-Processamento / Exportação XLSX
+[ Navegador do Usuário ]
+          ↓
+[ Front-End: React + Vite + Tailwind ]
+          ↓
+      HTTP / JSON
+      Multipart
+          ↓
+[ Back-End: Node.js + Express ]
+          ├──→ [ Multer ]
+          │       ↓
+          │   /uploads
+          │
+          └──→ [ better-sqlite3 ]
+                  ↓
+              [ SQLite ]
 ```
+
+O fluxo principal da aplicação consiste em:
+
+```text
+Usuário
+   ↓
+Upload do PDF
+   ↓
+Validação do arquivo
+   ↓
+Multer
+   ↓
+Armazenamento do arquivo
+   ↓
+Persistência dos metadados
+   ↓
+SQLite
+   ↓
+API REST
+   ↓
+Front-End
+```
+
+O processamento e a extração do conteúdo dos PDFs serão incorporados posteriormente ao fluxo da aplicação.
 
 ---
 
@@ -150,19 +198,22 @@ A documentação técnica do projeto está organizada nos seguintes tópicos:
 
 ## 📌 Status
 
-🚧 Em desenvolvimento
+🚧 **Em desenvolvimento**
+
+Funcionalidades relacionadas ao processamento e extração de dados dos documentos, exportação para XLSX e infraestrutura com Docker estão planejadas para as próximas etapas do projeto.
 
 ---
 
-<!-- MODELO DE AUTOR-->
 ## 🦸 Autor
 
 <a href="https://www.linkedin.com/in/davirobertoferreira/">
 Davi Ferreira</a>
- <br />
- 
-[![Gmail Badge](https://img.shields.io/badge/-davi2580vege@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:davi2580vege@gmail.com)](mailto:davi2580@gmail.com)
+<br />
+
+[![Gmail Badge](https://img.shields.io/badge/-davi2580vege@gmail.com-c14438?style=flat-square\&logo=Gmail\&logoColor=white\&link=mailto\:davi2580vege@gmail.com)](mailto:davi2580@gmail.com)
 
 ---
 
-Feito por Davi Ferreira👋🏽 [Entre em contato!](https://www.linkedin.com/in/davirobertoferreira/)
+Feito por **Davi Ferreira** 👋🏽 [Entre em contato!](https://www.linkedin.com/in/davirobertoferreira/)
+
+---
