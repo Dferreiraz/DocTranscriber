@@ -9,11 +9,13 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
-  const fetchDocuments = async () => {
+    const fetchDocuments = async () => {
     try {
       setLoading(true)
       const response = await axios.get('/api/documents')
-      setDocuments(response.data)
+      
+      setDocuments(response.data.documents) 
+      
       setError(null)
     } catch (err) {
       setError('Erro ao carregar documentos')
