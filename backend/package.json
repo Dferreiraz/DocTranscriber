@@ -12,7 +12,9 @@
   "type": "commonjs",
   "dependencies": {
     "better-sqlite3": "^13.0.3",
+    "exceljs": "^4.4.0",
     "express": "^5.2.1",
-    "multer": "^2.3.0"
+    "multer": "^2.3.0",
+    "pdf-parse": "^2.4.5"
   }
 }
