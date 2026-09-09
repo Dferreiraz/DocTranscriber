@@ -4,6 +4,7 @@ const upload = require('../middlewares/uploadMiddleware')
 const documentController = require('../controllers/documentController')
 
 router.get('/', documentController.getAllDocuments)
+router.get('/export', documentController.exportDocuments)
 router.get('/:id/download', documentController.getDocumentDownload)
 router.get('/:id', documentController.getDocumentById)
 router.post('/', upload.single('file'), documentController.createDocument)
