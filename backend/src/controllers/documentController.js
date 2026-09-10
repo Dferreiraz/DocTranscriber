@@ -1,7 +1,7 @@
 const db = require('../database/db')
 const path = require('path')
 const fs = require('fs')
-const pdf = require('pdf-parse')
+const pdfParse = require('pdf-parse')
 const ExcelJS = require('exceljs')
 
 const getAllDocuments = (req, res, next) => {
@@ -76,7 +76,7 @@ const createDocument = async (req, res, next) => {
         
         try {
             const fileBuffer = fs.readFileSync(file.path)
-            const pdfData = await pdf(fileBuffer)
+            const pdfData = await pdfParse(fileBuffer)
             extractedText = pdfData.text.trim() || 'Nenhum texto extraído (PDF pode ser apenas imagens).'
         } catch (pdfError) {
             console.error('Erro ao ler PDF:', pdfError)
