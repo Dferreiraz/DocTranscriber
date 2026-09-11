@@ -4,6 +4,8 @@ const path = require('path')
 const dbPath = path.join(__dirname, 'documents.db')
 const db = new Database(dbPath)
 
+db.pragma('encoding = "UTF-8"')
+
 db.exec(`
     CREATE TABLE IF NOT EXISTS documents (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

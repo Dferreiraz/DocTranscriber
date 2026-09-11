@@ -1,7 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const loggerMiddleware = require('./middlewares/loggerMiddleware')
 const errorMiddleware = require('./middlewares/errorMiddleware')
+const utf8Middleware = require('./middlewares/utf8Middleware') // NOVO!
 const healthRoutes = require('./routes/healthRoutes')
 const documentRoutes = require('./routes/documentRoutes')
 
@@ -9,14 +11,15 @@ const app = express()
 
 app.use(loggerMiddleware)
 app.use(express.json())
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
-app.use(express.static(path.join(__dirname, '../frontend/dist')))
+app.use(utf8Middleware) // APLICAR ANTES DAS ROTAS DE UPLOAD
+app.use('/uploads', express.static(path.join(__dirname, '../../uploads')))
+app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 
 app.use('/api/health', healthRoutes)
 app.use('/api/documents', documentRoutes)
 
 app.get('/*splat', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
+    res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'))
 })
 
 app.use(errorMiddleware)

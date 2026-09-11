@@ -1,8 +1,8 @@
 const db = require('../database/db')
 const path = require('path')
 const fs = require('fs')
-const pdfParse = require('pdf-parse')
 const ExcelJS = require('exceljs')
+const { PDFParse } = require('pdf-parse')
 
 const getAllDocuments = (req, res, next) => {
     try {
@@ -49,7 +49,7 @@ const getDocumentDownload = (req, res, next) => {
         const { id } = req.params
         const document = db.prepare('SELECT * FROM documents WHERE id = ?').get(id)
         if (!document) return res.status(404).json({ message: 'Documento não encontrado' })
-        
+
         const filePath = path.join(__dirname, '..', '..', document.filepath)
         res.download(filePath, document.filename)
     } catch (error) { next(error) }
@@ -59,25 +59,32 @@ const createDocument = async (req, res, next) => {
     try {
         const file = req.file
         if (!file) return res.status(400).json({ message: 'Nenhum arquivo enviado' })
-        
+
+        const originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
+
         const result = db.prepare(`
             INSERT INTO documents (filename, filepath, status, extracted_data, created_at)
             VALUES (?, ?, ?, ?, ?)
         `).run(
-            file.originalname,
+            originalname,
             file.path.replace(/\\/g, '/'),
             'processing',
             null,
             new Date().toISOString()
         )
-        
+
         let extractedText = null
         let finalStatus = 'completed'
-        
+
         try {
             const fileBuffer = fs.readFileSync(file.path)
-            const pdfData = await pdfParse(fileBuffer)
+
+            const parser = new PDFParse({ data: fileBuffer })
+            const pdfData = await parser.getText()
+
             extractedText = pdfData.text.trim() || 'Nenhum texto extraído (PDF pode ser apenas imagens).'
+
+            await parser.destroy()
         } catch (pdfError) {
             console.error('Erro ao ler PDF:', pdfError)
             finalStatus = 'failed'
@@ -90,7 +97,9 @@ const createDocument = async (req, res, next) => {
 
         const newDocument = db.prepare('SELECT * FROM documents WHERE id = ?').get(result.lastInsertRowid)
         res.status(201).json(newDocument)
-    } catch (error) { next(error) }
+    } catch (error) {
+        next(error)
+    }
 }
 
 const updateDocument = (req, res, next) => {
@@ -99,13 +108,13 @@ const updateDocument = (req, res, next) => {
         const { status, extracted_data } = req.body
         const document = db.prepare('SELECT * FROM documents WHERE id = ?').get(id)
         if (!document) return res.status(404).json({ message: 'Documento não encontrado' })
-        
+
         const newStatus = status !== undefined ? status : document.status
         const newExtractedData = extracted_data !== undefined ? extracted_data : document.extracted_data
-        
+
         db.prepare(`UPDATE documents SET status = ?, extracted_data = ? WHERE id = ?`)
-          .run(newStatus, newExtractedData, id)
-        
+            .run(newStatus, newExtractedData, id)
+
         const updatedDocument = db.prepare('SELECT * FROM documents WHERE id = ?').get(id)
         res.status(200).json({ message: 'Documento atualizado com sucesso', document: updatedDocument })
     } catch (error) { next(error) }
@@ -116,7 +125,7 @@ const deleteDocument = (req, res, next) => {
         const { id } = req.params
         const document = db.prepare('SELECT * FROM documents WHERE id = ?').get(id)
         if (!document) return res.status(404).json({ message: 'Documento não encontrado' })
-        
+
         db.prepare('DELETE FROM documents WHERE id = ?').run(id)
         res.status(200).json({ message: 'Documento removido com sucesso' })
     } catch (error) { next(error) }
@@ -140,11 +149,11 @@ const exportDocuments = async (req, res, next) => {
         worksheet.addRows(documents)
 
         res.setHeader(
-            'Content-Type', 
+            'Content-Type',
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
         res.setHeader(
-            'Content-Disposition', 
+            'Content-Disposition',
             'attachment; filename=doctranscriber_export.xlsx'
         )
 
