@@ -1,53 +1,62 @@
-# 🚧 DocTranscriber - Em construção 🚧
+# 📄 DocTranscriber
 
 <p align="center">
- •
- <a href="#-descrição-do-entregável">Descrição do Entregável</a> •
- <a href="#-sobre-o-projeto">Sobre</a> •
- <a href="#-funcionalidades">Funcionalidades</a> •
- <a href="#-tecnologias">Tecnologias</a> •
- <a href="#-arquitetura">Arquitetura</a> •
- <a href="#-documentação">Documentação</a> •
- <a href="#-autor">Autor</a> •
+  <strong>Aplicação Full Stack para upload, processamento e extração de dados de documentos PDF.</strong>
 </p>
 
----
-
-## 📄 Descrição do entregável
-
-O **DocTranscriber** é uma aplicação web desenvolvida para realizar o upload, gerenciamento e processamento de documentos PDF, com o objetivo de transformar seu conteúdo em dados estruturados.
-
-A aplicação está sendo desenvolvida como um projeto Full Stack, integrando uma interface construída com React a uma API REST desenvolvida em Node.js e Express.
+<p align="center">
+  •
+  <a href="#-sobre-o-projeto">Sobre</a> •
+  <a href="#-funcionalidades">Funcionalidades</a> •
+  <a href="#-tecnologias">Tecnologias</a> •
+  <a href="#-arquitetura">Arquitetura</a> •
+  <a href="#-estrutura-do-projeto">Estrutura</a> •
+  <a href="#-como-executar">Como Executar</a> •
+  <a href="#-documentação">Documentação</a> •
+  <a href="#-autor">Autor</a> •
+</p>
 
 ---
 
 ## 💻 Sobre o projeto
 
-O DocTranscriber foi desenvolvido com o objetivo de praticar conceitos de desenvolvimento Full Stack e trabalhar com um fluxo completo de gerenciamento e processamento de documentos.
+O **DocTranscriber** é uma aplicação web Full Stack desenvolvida para realizar o **upload, gerenciamento, processamento e extração de dados de documentos PDF**.
 
-O projeto envolve desde o upload e gerenciamento dos arquivos pelo usuário até a persistência dos dados e, futuramente, a extração e transformação do conteúdo dos documentos em informações estruturadas.
+O projeto foi desenvolvido com foco em colocar em prática conceitos de desenvolvimento **Front-End, Back-End, APIs REST, processamento de arquivos, persistência de dados, arquitetura de aplicações e infraestrutura**.
 
-Além do desenvolvimento da aplicação, o projeto também é utilizado para aprofundar conhecimentos relacionados à construção de APIs REST, manipulação de arquivos, banco de dados relacionais, arquitetura de aplicações e infraestrutura.
+A aplicação possui uma arquitetura desacoplada, com uma interface desenvolvida em **React** e uma API REST construída com **Node.js e Express**, utilizando **PostgreSQL** para persistência dos dados.
+
+O sistema também conta com suporte a **Docker e Docker Compose**, permitindo executar a aplicação e seus serviços de forma padronizada em diferentes ambientes.
 
 ### 🌎 Deploy
 
+**Aplicação:**
 https://doctranscriber.onrender.com/
 
 ---
 
 ## ⚙️ Funcionalidades
 
-* [x] Upload de documentos PDF com validação de tipo e tamanho
-* [x] Processamento e extração automática de texto do PDF
-* [x] Visualização do conteúdo transcrito em modal
+* [x] Upload de documentos PDF
+* [x] Validação de tipo e tamanho dos arquivos
+* [x] Armazenamento dos documentos enviados
+* [x] Extração automática de texto dos PDFs
+* [x] Preservação de acentuação e caracteres especiais utilizando UTF-8
+* [x] Visualização do conteúdo extraído
 * [x] Download do PDF original
-* [x] Exportação de dados estruturados para XLSX (Excel)
-* [x] Listagem, busca e exclusão de documentos
-* [x] Atualização parcial de status e dados extraídos
+* [x] Exportação dos dados extraídos para XLSX
+* [x] Listagem de documentos
+* [x] Busca e filtragem de documentos
+* [x] Filtragem por status
+* [x] Paginação
+* [x] Exclusão de documentos
+* [x] Atualização parcial de dados e status
 * [x] Comunicação entre Front-End e Back-End através de API REST
-* [x] Persistência de dados real com banco de dados relacional (SQLite)
-* [x] Interface responsiva e moderna com Tailwind CSS
-* [ ] Containerização e orquestração com Docker (Em breve)
+* [x] Persistência de dados utilizando PostgreSQL
+* [x] Interface responsiva
+* [x] Dark Mode
+* [x] Containerização com Docker
+* [x] Orquestração com Docker Compose
 
 ---
 
@@ -55,43 +64,228 @@ https://doctranscriber.onrender.com/
 
 ### Aplicação
 
-> Em breve serão adicionadas imagens e screenshots da aplicação.
+> Screenshots da aplicação serão adicionados posteriormente.
 
 ---
 
-## 🚀 Como executar o projeto
+## 🛠️ Tecnologias
+
+### Front-End
+
+* **React** — Biblioteca para construção da interface
+* **Vite** — Build tool e ambiente de desenvolvimento
+* **Tailwind CSS** — Estilização da interface
+* **Axios** — Comunicação HTTP com a API
+* **React Router** — Gerenciamento de rotas da aplicação
+
+### Back-End
+
+* **Node.js** — Ambiente de execução JavaScript
+* **Express** — Framework para construção da API REST
+* **pg** — Cliente PostgreSQL para Node.js
+* **Multer** — Upload e gerenciamento de arquivos
+* **pdf-parse** — Extração de conteúdo textual de arquivos PDF
+* **ExcelJS** — Geração de arquivos XLSX
+* **dotenv** — Gerenciamento de variáveis de ambiente
+
+### Banco de Dados
+
+* **PostgreSQL** — Banco de dados relacional principal
+
+Compatível com ambientes PostgreSQL locais e serviços como:
+
+* Neon
+* Supabase
+* Render PostgreSQL
+
+### Infraestrutura
+
+* **Docker** — Containerização
+* **Docker Compose** — Orquestração dos serviços
+* **Render** — Deploy da aplicação
+* **Git** — Controle de versão
+* **GitHub** — Hospedagem do código-fonte
+
+---
+
+## 🏗️ Arquitetura
+
+O DocTranscriber utiliza uma arquitetura desacoplada entre **Front-End, Back-End e Banco de Dados**.
+
+```text
+┌──────────────────────────┐
+│      Navegador           │
+│                          │
+│ React + Vite + Tailwind  │
+└────────────┬─────────────┘
+             │
+             │ HTTP / JSON
+             │ Multipart
+             ▼
+┌──────────────────────────┐
+│       API REST           │
+│                          │
+│ Node.js + Express        │
+└───────┬───────────┬──────┘
+        │           │
+        │           │
+        ▼           ▼
+┌────────────┐  ┌──────────────┐
+│   Multer   │  │ PostgreSQL   │
+│            │  │              │
+│ PDF Upload │  │ Persistência │
+└─────┬──────┘  └──────────────┘
+      │
+      ▼
+┌────────────┐
+│  /uploads  │
+│            │
+│ PDF files  │
+└────────────┘
+```
+
+### Fluxo principal
+
+```text
+Usuário
+   ↓
+Upload do PDF
+   ↓
+Validação do arquivo
+   ↓
+Multer
+   ↓
+Armazenamento do PDF
+   ↓
+Processamento / Extração de texto
+   ↓
+Persistência dos dados
+   ↓
+PostgreSQL
+   ↓
+API REST
+   ↓
+Front-End
+   ↓
+Visualização / Exportação
+```
+
+---
+
+## 📁 Estrutura do projeto
+
+```text
+DocTranscriber/
+│
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   │   └── # Lógica das operações e respostas HTTP
+│   │   │
+│   │   ├── database/
+│   │   │   └── # Configuração da conexão com PostgreSQL
+│   │   │
+│   │   ├── middlewares/
+│   │   │   └── # Middlewares da aplicação
+│   │   │
+│   │   ├── routes/
+│   │   │   └── # Definição das rotas da API
+│   │   │
+│   │   └── server.js
+│   │       # Ponto de entrada da API
+│   │
+│   ├── uploads/
+│   │   └── # Arquivos PDF enviados
+│   │
+│   └── .env
+│       # Variáveis de ambiente
+│
+├── frontend/
+│   ├── src/
+│   └── # Interface React
+│
+├── database/
+│   └── schema.sql
+│       # Estrutura inicial do banco
+│
+├── docker-compose.yml
+│   # Orquestração dos serviços
+│
+├── Dockerfile
+│   # Configuração da imagem Docker
+│
+└── README.md
+```
+
+---
+
+## 🚀 Como executar
 
 ### Pré-requisitos
 
-Antes de começar, você vai precisar ter instalado em sua máquina:
+Antes de executar o projeto, certifique-se de possuir:
 
 * [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (v18+ recomendado)
+* [Node.js](https://nodejs.org/) — v18 ou superior recomendado
+* [PostgreSQL](https://www.postgresql.org/)
+* [Docker](https://www.docker.com/) — opcional para execução via containers
 
-### Executando localmente
+---
 
-1. Clone o repositório:
+### 1. Clone o repositório
 
 ```bash
 git clone https://github.com/Dferreiraz/DocTranscriber.git
 cd DocTranscriber
 ```
 
-2. **Configurando o Back-End:**
+---
+
+### 2. Configure as variáveis de ambiente
+
+Crie um arquivo `.env` dentro da pasta `backend/`:
+
+```env
+PORT=3000
+NODE_ENV=development
+
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=sua_senha_aqui
+DB_NAME=doctranscriber
+```
+
+> **Nota:** a estrutura necessária para a tabela `documents` é criada automaticamente durante a inicialização da aplicação.
+
+---
+
+### 3. Execute o Back-End
+
+Entre na pasta do Back-End e instale as dependências:
 
 ```bash
 cd backend
 npm install
+```
+
+Inicie o servidor:
+
+```bash
 node src/server.js
 ```
 
-O servidor será iniciado em:
+A API estará disponível em:
 
 ```text
 http://localhost:3000
 ```
 
-3. **Configurando o Front-End em outro terminal:**
+---
+
+### 4. Execute o Front-End
+
+Abra outro terminal e execute:
 
 ```bash
 cd frontend
@@ -107,81 +301,53 @@ http://localhost:5173
 
 ---
 
-## 🛠 Tecnologias
+## 🐳 Executando com Docker
 
-As seguintes tecnologias foram utilizadas na construção do projeto:
+O projeto também pode ser executado utilizando **Docker Compose**.
 
-### Front-End
+Na raiz do projeto, configure as variáveis de ambiente necessárias e execute:
 
-* **React** — Biblioteca para construção da interface
-* **Vite** — Build tool e servidor de desenvolvimento
-* **Tailwind CSS** — Estilização da interface
-* **Axios** — Cliente HTTP para comunicação com a API
+```bash
+docker compose up -d --build
+```
 
-### Back-End
+Para visualizar os containers:
 
-* **Node.js** — Ambiente de execução
-* **Express** — Framework para construção da API
-* **Multer** — Middleware para upload e gerenciamento de arquivos
+```bash
+docker compose ps
+```
 
-### Banco de Dados
+Para acompanhar os logs:
 
-* **SQLite** — Banco de dados relacional
-* **better-sqlite3** — Biblioteca para integração com SQLite
+```bash
+docker compose logs -f
+```
 
-### Infraestrutura e Deploy
+Para encerrar a aplicação:
 
-* **Render** — Hospedagem da aplicação em produção
-* **Git** — Sistema de controle de versão
-* **GitHub** — Hospedagem do repositório e versionamento do projeto
+```bash
+docker compose down
+```
+
+A aplicação estará disponível em:
+
+```text
+http://localhost:3000
+```
 
 ---
 
-## 🏗️ Arquitetura
+## 🔐 Variáveis de ambiente
 
-O projeto segue uma arquitetura desacoplada, onde o Back-End atua como uma API REST e também pode servir os arquivos estáticos do Front-End em produção.
+As credenciais e configurações sensíveis não devem ser versionadas no repositório.
 
-```text
-[ Navegador do Usuário ]
-          ↓
-[ Front-End: React + Vite + Tailwind ]
-          ↓
-      HTTP / JSON
-      Multipart
-          ↓
-[ Back-End: Node.js + Express ]
-          ├──→ [ Multer ]
-          │       ↓
-          │   /uploads
-          │
-          └──→ [ better-sqlite3 ]
-                  ↓
-              [ SQLite ]
+O arquivo `.env` deve ser incluído no `.gitignore`:
+
+```gitignore
+.env
 ```
 
-O fluxo principal da aplicação consiste em:
-
-```text
-Usuário
-   ↓
-Upload do PDF
-   ↓
-Validação do arquivo
-   ↓
-Multer
-   ↓
-Armazenamento do arquivo
-   ↓
-Persistência dos metadados
-   ↓
-SQLite
-   ↓
-API REST
-   ↓
-Front-End
-```
-
-O processamento e a extração do conteúdo dos PDFs serão incorporados posteriormente ao fluxo da aplicação.
+Em ambientes de produção, as variáveis devem ser configuradas diretamente na plataforma de hospedagem ou no ambiente de execução dos containers.
 
 ---
 
@@ -196,11 +362,13 @@ A documentação técnica do projeto está organizada nos seguintes tópicos:
 * **Database**
 * **Technical Decisions**
 
----
+Esses documentos apresentam detalhes sobre as decisões técnicas, arquitetura, banco de dados, endpoints e evolução planejada da aplicação.
+
+
 
 ## 📌 Status
 
-🚧 **Em desenvolvimento**
+✅ **Concluído**
 
 Funcionalidades relacionadas ao processamento e extração de dados dos documentos, exportação para XLSX e infraestrutura com Docker estão planejadas para as próximas etapas do projeto.
 
