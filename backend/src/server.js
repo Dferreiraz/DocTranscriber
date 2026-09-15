@@ -1,17 +1,19 @@
+require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const loggerMiddleware = require('./middlewares/loggerMiddleware')
 const errorMiddleware = require('./middlewares/errorMiddleware')
+const utf8Middleware = require('./middlewares/utf8Middleware') // NOVO!
 const healthRoutes = require('./routes/healthRoutes')
 const documentRoutes = require('./routes/documentRoutes')
+const { initDb } = require('./database/db')
 
 const app = express()
-const PORT = process.env.PORT || 3000
 
 app.use(loggerMiddleware)
 app.use(express.json())
-
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
+app.use(utf8Middleware) // APLICAR ANTES DAS ROTAS DE UPLOAD
+app.use('/uploads', express.static(path.join(__dirname, '../../uploads')))
 app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 
 app.use('/api/health', healthRoutes)
@@ -23,6 +25,13 @@ app.get('/*splat', (req, res) => {
 
 app.use(errorMiddleware)
 
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`)
-})
+if (require.main === module) {
+    initDb().then(() => {
+        const PORT = process.env.PORT || 3000
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`)
+        })
+    })
+}
+
+module.exports = app
