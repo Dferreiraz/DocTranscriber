@@ -67,15 +67,14 @@ Este documento acompanha a evolução do projeto, desde o planejamento até o de
 
 ---
 
-## 📅 Próximos Passos (Backlog)
-- [ ] Containerização da aplicação com Docker e Docker Compose
-- [ ] Migração do banco de dados de SQLite para PostgreSQL (para persistência real em produção)
-- [ ] Implementação de OCR (Tesseract.js) para PDFs baseados em imagem
-- [ ] Testes automatizados (Jest/Supertest)
-- [ ] Dark Mode
+## Fase 7 - Backlog
+- [x] Containerização da aplicação com Docker e Docker Compose
+- [x] Migração do banco de dados de SQLite para PostgreSQL (para persistência real em produção)
+- [x] Testes automatizados (Jest/Supertest)
+- [x] Dark Mode
 
 ---
 
 ## 📌 Status Atual
 
-🚀 **Em Produção** (Versão 1.0.0 com funcionalidades core concluídas)
+✅ **Concluído** (Versão 2.0.0)
