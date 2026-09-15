@@ -1,10 +1,10 @@
-const db = require('../database/db')
+const { pool } = require('../database/db')
 const path = require('path')
 const fs = require('fs')
 const ExcelJS = require('exceljs')
 const { PDFParse } = require('pdf-parse')
 
-const getAllDocuments = (req, res, next) => {
+const getAllDocuments = async (req, res, next) => {
     try {
         const page = parseInt(req.query.page) || 1
         const limit = parseInt(req.query.limit) || 10
@@ -16,16 +16,19 @@ const getAllDocuments = (req, res, next) => {
         const params = []
 
         if (status) {
-            query += ' WHERE status = ?'
-            countQuery += ' WHERE status = ?'
+            query += ' WHERE status = $1'
+            countQuery += ' WHERE status = $1'
             params.push(status)
         }
 
-        query += ' ORDER BY created_at DESC LIMIT ? OFFSET ?'
+        query += ` ORDER BY created_at DESC LIMIT $${params.length + 1} OFFSET $${params.length + 2}`
         params.push(limit, offset)
 
-        const documents = db.prepare(query).all(...params)
-        const total = db.prepare(countQuery).get(...(status ? [status] : [])).total
+        const { rows: documents } = await pool.query(query, params)
+        
+        const countParams = status ? [status] : []
+        const { rows: countRows } = await pool.query(countQuery, countParams)
+        const total = parseInt(countRows[0].total)
         const totalPages = Math.ceil(total / limit)
 
         res.status(200).json({
@@ -35,21 +38,25 @@ const getAllDocuments = (req, res, next) => {
     } catch (error) { next(error) }
 }
 
-const getDocumentById = (req, res, next) => {
+const getDocumentById = async (req, res, next) => {
     try {
         const { id } = req.params
-        const document = db.prepare('SELECT * FROM documents WHERE id = ?').get(id)
+        const { rows } = await pool.query('SELECT * FROM documents WHERE id = $1', [id])
+        const document = rows[0]
+        
         if (!document) return res.status(404).json({ message: 'Documento não encontrado' })
         res.status(200).json(document)
     } catch (error) { next(error) }
 }
 
-const getDocumentDownload = (req, res, next) => {
+const getDocumentDownload = async (req, res, next) => {
     try {
         const { id } = req.params
-        const document = db.prepare('SELECT * FROM documents WHERE id = ?').get(id)
+        const { rows } = await pool.query('SELECT * FROM documents WHERE id = $1', [id])
+        const document = rows[0]
+        
         if (!document) return res.status(404).json({ message: 'Documento não encontrado' })
-
+        
         const filePath = path.join(__dirname, '..', '..', document.filepath)
         res.download(filePath, document.filename)
     } catch (error) { next(error) }
@@ -59,31 +66,32 @@ const createDocument = async (req, res, next) => {
     try {
         const file = req.file
         if (!file) return res.status(400).json({ message: 'Nenhum arquivo enviado' })
-
+        
         const originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
-
-        const result = db.prepare(`
+        
+        // PostgreSQL usa RETURNING para pegar o ID inserido imediatamente
+        const insertQuery = `
             INSERT INTO documents (filename, filepath, status, extracted_data, created_at)
-            VALUES (?, ?, ?, ?, ?)
-        `).run(
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING id
+        `
+        const { rows } = await pool.query(insertQuery, [
             originalname,
             file.path.replace(/\\/g, '/'),
             'processing',
             null,
             new Date().toISOString()
-        )
-
+        ])
+        const newId = rows[0].id
+        
         let extractedText = null
         let finalStatus = 'completed'
-
+        
         try {
             const fileBuffer = fs.readFileSync(file.path)
-
             const parser = new PDFParse({ data: fileBuffer })
             const pdfData = await parser.getText()
-
             extractedText = pdfData.text.trim() || 'Nenhum texto extraído (PDF pode ser apenas imagens).'
-
             await parser.destroy()
         } catch (pdfError) {
             console.error('Erro ao ler PDF:', pdfError)
@@ -91,49 +99,55 @@ const createDocument = async (req, res, next) => {
             extractedText = 'Erro ao processar o PDF.'
         }
 
-        db.prepare(`
-            UPDATE documents SET status = ?, extracted_data = ? WHERE id = ?
-        `).run(finalStatus, extractedText, result.lastInsertRowid)
+        await pool.query(
+            'UPDATE documents SET status = $1, extracted_data = $2 WHERE id = $3',
+            [finalStatus, extractedText, newId]
+        )
 
-        const newDocument = db.prepare('SELECT * FROM documents WHERE id = ?').get(result.lastInsertRowid)
-        res.status(201).json(newDocument)
-    } catch (error) {
-        next(error)
+        const { rows: updatedRows } = await pool.query('SELECT * FROM documents WHERE id = $1', [newId])
+        res.status(201).json(updatedRows[0])
+    } catch (error) { 
+        next(error) 
     }
 }
 
-const updateDocument = (req, res, next) => {
+const updateDocument = async (req, res, next) => {
     try {
         const { id } = req.params
         const { status, extracted_data } = req.body
-        const document = db.prepare('SELECT * FROM documents WHERE id = ?').get(id)
+        
+        const { rows } = await pool.query('SELECT * FROM documents WHERE id = $1', [id])
+        const document = rows[0]
         if (!document) return res.status(404).json({ message: 'Documento não encontrado' })
-
+        
         const newStatus = status !== undefined ? status : document.status
         const newExtractedData = extracted_data !== undefined ? extracted_data : document.extracted_data
-
-        db.prepare(`UPDATE documents SET status = ?, extracted_data = ? WHERE id = ?`)
-            .run(newStatus, newExtractedData, id)
-
-        const updatedDocument = db.prepare('SELECT * FROM documents WHERE id = ?').get(id)
-        res.status(200).json({ message: 'Documento atualizado com sucesso', document: updatedDocument })
+        
+        await pool.query(
+            'UPDATE documents SET status = $1, extracted_data = $2 WHERE id = $3',
+            [newStatus, newExtractedData, id]
+        )
+        
+        const { rows: updatedRows } = await pool.query('SELECT * FROM documents WHERE id = $1', [id])
+        res.status(200).json({ message: 'Documento atualizado com sucesso', document: updatedRows[0] })
     } catch (error) { next(error) }
 }
 
-const deleteDocument = (req, res, next) => {
+const deleteDocument = async (req, res, next) => {
     try {
         const { id } = req.params
-        const document = db.prepare('SELECT * FROM documents WHERE id = ?').get(id)
-        if (!document) return res.status(404).json({ message: 'Documento não encontrado' })
-
-        db.prepare('DELETE FROM documents WHERE id = ?').run(id)
+        const { rows } = await pool.query('SELECT * FROM documents WHERE id = $1', [id])
+        
+        if (rows.length === 0) return res.status(404).json({ message: 'Documento não encontrado' })
+        
+        await pool.query('DELETE FROM documents WHERE id = $1', [id])
         res.status(200).json({ message: 'Documento removido com sucesso' })
     } catch (error) { next(error) }
 }
 
 const exportDocuments = async (req, res, next) => {
     try {
-        const documents = db.prepare('SELECT * FROM documents ORDER BY created_at DESC').all()
+        const { rows: documents } = await pool.query('SELECT * FROM documents ORDER BY created_at DESC')
 
         const workbook = new ExcelJS.Workbook()
         const worksheet = workbook.addWorksheet('Documentos')
@@ -149,11 +163,11 @@ const exportDocuments = async (req, res, next) => {
         worksheet.addRows(documents)
 
         res.setHeader(
-            'Content-Type',
+            'Content-Type', 
             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         )
         res.setHeader(
-            'Content-Disposition',
+            'Content-Disposition', 
             'attachment; filename=doctranscriber_export.xlsx'
         )
 

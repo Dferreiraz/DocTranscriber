@@ -6,6 +6,7 @@ const errorMiddleware = require('./middlewares/errorMiddleware')
 const utf8Middleware = require('./middlewares/utf8Middleware') // NOVO!
 const healthRoutes = require('./routes/healthRoutes')
 const documentRoutes = require('./routes/documentRoutes')
+const { initDb } = require('./database/db')
 
 const app = express()
 
@@ -25,9 +26,11 @@ app.get('/*splat', (req, res) => {
 app.use(errorMiddleware)
 
 if (require.main === module) {
-    const PORT = process.env.PORT || 3000
-    app.listen(PORT, () => {
-        console.log(`Servidor rodando na porta ${PORT}`)
+    initDb().then(() => {
+        const PORT = process.env.PORT || 3000
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`)
+        })
     })
 }
 
