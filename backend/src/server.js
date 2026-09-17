@@ -3,7 +3,7 @@ const express = require('express')
 const path = require('path')
 const loggerMiddleware = require('./middlewares/loggerMiddleware')
 const errorMiddleware = require('./middlewares/errorMiddleware')
-const utf8Middleware = require('./middlewares/utf8Middleware') // NOVO!
+const utf8Middleware = require('./middlewares/utf8Middleware') 
 const healthRoutes = require('./routes/healthRoutes')
 const documentRoutes = require('./routes/documentRoutes')
 const { initDb } = require('./database/db')
@@ -12,7 +12,7 @@ const app = express()
 
 app.use(loggerMiddleware)
 app.use(express.json())
-app.use(utf8Middleware) // APLICAR ANTES DAS ROTAS DE UPLOAD
+app.use(utf8Middleware)
 app.use('/uploads', express.static(path.join(__dirname, '../../uploads')))
 app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 
