@@ -28,11 +28,6 @@ A aplicação possui uma arquitetura desacoplada, com uma interface desenvolvida
 
 O sistema também conta com suporte a **Docker e Docker Compose**, permitindo executar a aplicação e seus serviços de forma padronizada em diferentes ambientes.
 
-### 🌎 Deploy
-
-**Aplicação:**
-https://doctranscriber.onrender.com/
-
 ---
 
 ## ⚙️ Funcionalidades
